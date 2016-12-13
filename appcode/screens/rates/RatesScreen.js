@@ -44,6 +44,8 @@ class RatesScreen extends Component {
     // api call live here
     componentDidMount() {
 
+        // subscribe to the firebase real-time database path
+        // on data change, this will synchronise data with all connected devices.
         this.props.Firebase.database().ref('latestMarkets/').on('value', snapshot => {
             let snapper = snapshot.val()
 
@@ -51,7 +53,7 @@ class RatesScreen extends Component {
                 // new object
                 let newRates = {}
                 let i = 0
-
+                // Transform the data into a better format and prepare for displaying it.
                 Object.keys(snapper).forEach((key) => {
                     i++
 
@@ -66,7 +68,7 @@ class RatesScreen extends Component {
                         newRates[i]['Last'] = snapper[key].Last
                     }
                 })
-                // setState will overwite the default data and will re render the list
+                // add data to state via setState
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(newRates),
                     // stop the loader animation
@@ -90,13 +92,6 @@ class RatesScreen extends Component {
         }
     }
 
-    renderSorter() {
-        return (
-            <Icon style={styles.angleUp} name="angle-up" />
-        )
-    }
-
-
     // render each item
     renderRow(row) {
         return (
@@ -118,7 +113,6 @@ class RatesScreen extends Component {
     render() {
 
         return (
-
             <View style={styles.mainPadding, styles.listViewContainer}>
 
                 <LoaderModal parentProps={this.state} />
@@ -128,7 +122,6 @@ class RatesScreen extends Component {
                     dataSource={this.state.dataSource}
                     renderRow={(rowData) => {return this.renderRow(rowData)}}
                 />
-
             </View>
         )
     }
