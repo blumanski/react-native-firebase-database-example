@@ -30,7 +30,7 @@ import RatesScreen from './screens/rates/RatesScreen'
 import AppConfig from './AppConfig'
 const Config = AppConfig.getConfig()
 
-Firebase = Fire.initializeApp(Config.firebaseConfig)
+const Firebase = Fire.initializeApp(Config.firebaseConfig)
 
 class examplefiredata extends Component {
 
